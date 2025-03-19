@@ -19,6 +19,8 @@ const {
   generateRandomMajor,
 } = require('./generateDataFunctions');
 
+const generateBioText = require('./generateBioText');
+
 const admin = require('firebase-admin');
 const serviceAccount = require('./testroomieradar-firebase-adminsdk-abb9j-f46fcd07fa.json');
 
@@ -39,6 +41,7 @@ const generateFakeUsers = async () => {
     const fakeProfileData = {
       id: faker.random.uuid(),
       age: generateAge(),
+      bio: generateBioText(),
       gender: generateRandomGender(),
       alcoholUse: generateScaleValue(),
       budget: generateBudget(),

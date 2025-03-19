@@ -38,3 +38,15 @@ const lifestylePreferences = [
   "I enjoy listening to music or podcasts during my free time.",
   "I like having a good balance between social time and alone time."
 ];
+
+const generateBioText = () => {
+  return [
+    faker.random.arrayElement(hobbies),
+    faker.random.arrayElement(personalityTraits),
+    faker.random.arrayElement(lifestylePreferences),
+    faker.random.arrayElement(hobbies),
+    faker.random.arrayElement(personalityTraits)
+  ].join(' ');
+};
+
+module.exports = generateBioText;
