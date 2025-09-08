@@ -1,7 +1,6 @@
 const { findUserMatches } = require('./findUserMatches');
 const { getUsersFromDatabase } = require('./userRetrieval');
-// const { db } = require('./userRetrieval');
-// change this to the database calls within initializeFirebase.js
+
 const {db} = require('../../initalizeFirebase');
 
 async function findIndividualMatches(userId) {
