@@ -1,20 +1,22 @@
-const preliminaryChecks = require('./prelimChecks');
-const fuzzyMatchFunctions = require('./fuzzyMatch');
-const helperFunctions = require('./helperFunctions');
-const { getUsersFromDatabase } = require('./userRetrieval');
-const { findUserMatches } = require('./findMatches');
-const {db} = require('../../initalizeFirebase')
+const { findMatchesForUser } = require('./azure-sql/matchService');
 
+async function run() {
+  try {
+    const userId = process.env.USER_ID || 'test-user';
+    const sameSchool = process.env.SAME_SCHOOL !== 'false';
+    const topN = parseInt(process.env.TOP_N || '20', 10);
+    const persist = process.env.PERSIST !== 'false';
 
-async function main() {
-    try {
-        let users = await getUsersFromDatabase();
-        users = await findUserMatches(users, db);
-        console.log("calling main")
-
-    } catch (error) {
-        console.error('Error in main function:', error);
-    }
+    const results = await findMatchesForUser(userId, { sameSchool, persist, topN });
+    console.log(JSON.stringify({ userId, count: results.length, results }, null, 2));
+  } catch (err) {
+    console.error('[RoomieRadar] Fatal error:', err);
+    process.exit(1);
+  }
 }
 
-module.exports = {main};
+if (require.main === module) {
+  run();
+}
+
+module.exports = { run };
